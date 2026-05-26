@@ -1,4 +1,3 @@
-// 1. Catálogo con los IDs exactos de la Base de Datos
 const catalogo = {
     'prod-hamburguesa': { idDb: 1, nombre: 'Hamburguesa Clásica', precioBase: 15.00 },
     'prod-pizza': { idDb: 2, nombre: 'Pizza Personal', precioBase: 12.00 },
@@ -9,7 +8,6 @@ let productoActualSeleccionado = null;
 let ticketPedido = [];
 let totalPagar = 0;
 
-// 2. Seleccionar producto y cargar opciones dinámicas desde FastAPI
 document.querySelectorAll('.btn-seleccionar').forEach(boton => {
     boton.addEventListener('click', (e) => {
         const tarjeta = e.target.closest('.tarjeta-producto');
@@ -23,13 +21,11 @@ document.querySelectorAll('.btn-seleccionar').forEach(boton => {
         contenedorMods.innerHTML = '<p>Cargando opciones...</p>';
         zonaPersonalizacion.classList.remove('oculto');
 
-        // Petición GET al backend
         fetch(`http://127.0.0.1:8000/modificadores/${productoActualSeleccionado.idDb}`)
         .then(res => res.json())
         .then(data => {
-            contenedorMods.innerHTML = ''; // Limpiar mensaje
+            contenedorMods.innerHTML = ''; 
             
-            // Construir checkboxes según la respuesta de MySQL
             for (const [categoria, opciones] of Object.entries(data)) {
                 let htmlCategoria = `<b>${categoria}</b><br>`;
                 
@@ -47,12 +43,11 @@ document.querySelectorAll('.btn-seleccionar').forEach(boton => {
         })
         .catch(error => {
             contenedorMods.innerHTML = '<p>Error al cargar las opciones.</p>';
-            console.error('Error fetching modificadores:', error);
+            console.error(error);
         });
     });
 });
 
-// 3. Agregar el producto configurado al Ticket
 document.querySelector('.btn-agregar-ticket').addEventListener('click', () => {
     if (!productoActualSeleccionado) return;
 
@@ -60,7 +55,6 @@ document.querySelector('.btn-agregar-ticket').addEventListener('click', () => {
     let cremasSeleccionadas = [];
     let extrasSeleccionados = [];
 
-    // Leer los inputs generados dinámicamente
     document.querySelectorAll('input[name="modificador"]:checked').forEach(cb => {
         const nombreMod = cb.getAttribute('data-nombre');
         const precioMod = parseFloat(cb.value);
@@ -83,12 +77,10 @@ document.querySelector('.btn-agregar-ticket').addEventListener('click', () => {
     ticketPedido.push(nuevoItem);
     actualizarTicketDOM();
 
-    // Ocultar zona y resetear temporal
     document.getElementById('zona-personalizacion').classList.add('oculto');
     productoActualSeleccionado = null;
 });
 
-// 4. Actualizar la vista del Ticket en pantalla
 function actualizarTicketDOM() {
     const contenedorTicket = document.getElementById('lista-ticket');
     contenedorTicket.innerHTML = '';
@@ -101,29 +93,29 @@ function actualizarTicketDOM() {
         if (item.cremas.length > 0) detallesText.push(`Cremas: ${item.cremas.join(', ')}`);
         if (item.extras.length > 0) detallesText.push(`Extras: ${item.extras.join(', ')}`);
         
-        const li = document.createElement('li');
-        li.innerHTML = `
-            <b>${item.nombre}</b> - S/ ${item.subtotal.toFixed(2)}<br>
-            <small style="color:#555;">${detallesText.join(' | ')}</small>
+        const div = document.createElement('div');
+        div.className = 'item-ticket';
+        div.innerHTML = `
+            <p class="nombre-item">${item.nombre}</p>
+            <p class="detalle-item">${detallesText.join(' | ')}</p>
+            <p class="precio-item">S/ ${item.subtotal.toFixed(2)}</p>
         `;
-        contenedorTicket.appendChild(li);
+        contenedorTicket.appendChild(div);
     });
 
-    document.getElementById('total-pagar').textContent = `S/ ${totalPagar.toFixed(2)}`;
+    document.getElementById('monto-total').textContent = `S/ ${totalPagar.toFixed(2)}`;
 }
 
-// 5. Procesar Pago y enviar POST a FastAPI
-document.getElementById('btn-pagar').addEventListener('click', () => {
+document.getElementById('btn-generar-voucher').addEventListener('click', () => {
     if (ticketPedido.length === 0) {
         alert('Agrega al menos un producto al ticket.');
         return;
     }
 
-    const metodoPago = document.getElementById('metodo-pago');
+    const metodoPago = document.querySelector('input[name="pago"]:checked');
 
-    // JSON alineado estrictamente con schemas/pydantic_models.py
     const payloadBackend = {
-        metodo_pago: metodoPago.value,
+        metodo_pago: metodoPago ? metodoPago.value : 'efectivo',
         total: totalPagar,
         detalle_pedido: ticketPedido
     };
@@ -136,21 +128,21 @@ document.getElementById('btn-pagar').addEventListener('click', () => {
         body: JSON.stringify(payloadBackend)
     })
     .then(res => {
-        if (!res.ok) {
-            throw new Error(`Error HTTP: ${res.status}`);
-        }
+        if (!res.ok) throw new Error(`Error HTTP: ${res.status}`);
         return res.json();
     })
     .then(data => {
         alert(`${data.mensaje}\nNro. de Operación: ${data.id_venta}\nTotal: S/ ${data.total.toFixed(2)}`);
         
-        // Limpiar el ticket después de una compra exitosa
         ticketPedido = [];
         actualizarTicketDOM();
-        document.getElementById('metodo-pago').value = 'yape'; // Resetear select
+        
+        if (document.querySelector('input[name="pago"][value="yape"]')) {
+             document.querySelector('input[name="pago"][value="yape"]').checked = true;
+        }
     })
     .catch(err => {
-        console.error('Error en la transacción:', err);
-        alert('Hubo un problema al procesar el pago. Revisa la consola.');
+        console.error(err);
+        alert('Hubo un problema al procesar el pago. Revisa la terminal de Python.');
     });
 });

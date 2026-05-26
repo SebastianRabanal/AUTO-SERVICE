@@ -1,81 +1,84 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-width=1.0">
-    <title>Kiosco de Pedidos</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" type="image/x-icon" href="images/logo-autoservice.ico">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-width=1.0">
+  <title>Kiosco de Pedidos</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" type="image/x-icon" href="images/logo-autoservice.ico">
 </head>
+
 <body>
 
-    <header class="encabezado-principal">
-        <h1>Haz tu pedido aquí</h1>
-    </header>
+  <header class="encabezado-principal">
+    <h1>Haz tu pedido aquí</h1>
+  </header>
 
-    <main id="contenedor-principal">
-        
-        <section id="seccion-productos">
-            <h2>Nuestra Carta</h2>
-            
-            <div class="cuadricula-productos">
-                <div class="tarjeta-producto" id="prod-hamburguesa">
-                    <h3>Hamburguesa Clásica</h3>
-                    <img src="images/hamburguesa-clasica.webp" alt="Hamburguesa Clasica" class="img-producto">
-                    <p>S/ 15.00</p>
-                    <button class="btn-seleccionar">Personalizar</button>
-                </div>
-                
-                <div class="tarjeta-producto" id="prod-pizza">
-                    <h3>Pizza Personal</h3>
-                    <img src="images/pizza.webp" alt="Pizza Clasica" class="img-producto">
-                    <p>S/ 12.00</p>
-                    <button class="btn-seleccionar">Personalizar</button>
-                </div>
+  <main id="contenedor-principal">
 
-                <div class="tarjeta-producto" id="prod-cafe">
-                    <h3>Café Pasado</h3>
-                    <img src="images/cafe pasado.webp" alt="Cafe Pasado" class="img-producto">
-                    <p>S/ 6.00</p>
-                    <button class="btn-seleccionar">Personalizar</button>
-                </div>
-            </div>
+    <section id="seccion-productos">
+      <h2>Nuestra Carta</h2>
 
-            <div id="zona-personalizacion" class="oculto">
-                <h3></h3>
-                <div id="contenedor-modificadores"></div>
+      <div class="cuadricula-productos">
+        <div class="tarjeta-producto" id="prod-hamburguesa">
+          <h3>Hamburguesa Clásica</h3>
+          <img src="images/hamburguesa-clasica.webp" alt="Hamburguesa Clasica" class="img-producto">
+          <p>S/ 15.00</p>
+          <button class="btn-seleccionar">Personalizar</button>
+        </div>
 
-                <button class="btn-agregar-ticket">Agregar al Ticket</button>
-            </div>
-        </section>
+        <div class="tarjeta-producto" id="prod-pizza">
+          <h3>Pizza Personal</h3>
+          <img src="images/pizza.webp" alt="Pizza Clasica" class="img-producto">
+          <p>S/ 12.00</p>
+          <button class="btn-seleccionar">Personalizar</button>
+        </div>
 
-        <aside id="seccion-ticket">
-            <h2>Tu Pedido</h2>
-            
-            <div id="lista-ticket">
-                <div class="item-ticket">
-                    <p class="nombre-item">1x Hamburguesa Clásica</p>
-                    <p class="detalle-item">- Mayonesa, Kétchup</p>
-                    <p class="detalle-item">- Porción de papas extra</p>
-                    <p class="precio-item">S/ 19.00</p>
-                </div>
-            </div>
+        <div class="tarjeta-producto" id="prod-cafe">
+          <h3>Café Pasado</h3>
+          <img src="images/cafe pasado.webp" alt="Cafe Pasado" class="img-producto">
+          <p>S/ 6.00</p>
+          <button class="btn-seleccionar">Personalizar</button>
+        </div>
+      </div>
 
-            <div class="total-caja">
-                <h3>Total a Pagar: <span id="monto-total">S/ 19.00</span></h3>
-            </div>
+      <div id="zona-personalizacion" class="oculto">
+        <h3></h3>
+        <div id="contenedor-modificadores"></div>
 
-            <div id="metodos-pago">
-                <h3>Método de Pago</h3>
-                <label><input type="radio" name="pago" value="yape"> Yape</label>
-                <label><input type="radio" name="pago" value="plin"> Plin</label>
-                <label><input type="radio" name="pago" value="efectivo"> Efectivo en Caja</label>
-            </div>
+        <button class="btn-agregar-ticket">Agregar al Ticket</button>
+      </div>
+    </section>
 
-            <button id="btn-generar-voucher">Pagar y Generar Voucher</button>
-        </aside>
+    <aside id="seccion-ticket">
+      <h2>Tu Pedido</h2>
 
-    </main>
+      <div id="lista-ticket">
+        <div class="item-ticket">
+          <p class="nombre-item">1x Hamburguesa Clásica</p>
+          <p class="detalle-item">- Mayonesa, Kétchup</p>
+          <p class="detalle-item">- Porción de papas extra</p>
+          <p class="precio-item">S/ 19.00</p>
+        </div>
+      </div>
 
+      <div class="total-caja">
+        <h3>Total a Pagar: <span id="monto-total">S/ 19.00</span></h3>
+      </div>
+
+      <div id="metodos-pago">
+        <h3>Método de Pago</h3>
+        <label><input type="radio" name="pago" value="yape"> Yape</label>
+        <label><input type="radio" name="pago" value="plin"> Plin</label>
+        <label><input type="radio" name="pago" value="efectivo"> Efectivo en Caja</label>
+      </div>
+
+      <button id="btn-generar-voucher">Pagar y Generar Voucher</button>
+    </aside>
+
+  </main>
+  <script src="app.js"></script>
 </body>
+
 </html>

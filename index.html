@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-width=1.0">
     <title>Kiosco de Pedidos</title>
     <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/x-icon" href="images/logo-autoservice.ico">
 </head>
 <body>
 
@@ -20,38 +21,29 @@
             <div class="cuadricula-productos">
                 <div class="tarjeta-producto" id="prod-hamburguesa">
                     <h3>Hamburguesa Clásica</h3>
+                    <img src="images/hamburguesa-clasica.webp" alt="Hamburguesa Clasica" class="img-producto">
                     <p>S/ 15.00</p>
                     <button class="btn-seleccionar">Personalizar</button>
                 </div>
                 
                 <div class="tarjeta-producto" id="prod-pizza">
                     <h3>Pizza Personal</h3>
+                    <img src="images/pizza.webp" alt="Pizza Clasica" class="img-producto">
                     <p>S/ 12.00</p>
                     <button class="btn-seleccionar">Personalizar</button>
                 </div>
 
                 <div class="tarjeta-producto" id="prod-cafe">
                     <h3>Café Pasado</h3>
+                    <img src="images/cafe pasado.webp" alt="Cafe Pasado" class="img-producto">
                     <p>S/ 6.00</p>
                     <button class="btn-seleccionar">Personalizar</button>
                 </div>
             </div>
 
             <div id="zona-personalizacion" class="oculto">
-                <h3>Personaliza tu Hamburguesa</h3>
-                
-                <div class="grupo-opciones">
-                    <h4>Cremas (Gratis)</h4>
-                    <label><input type="checkbox" name="crema" value="mayonesa"> Mayonesa</label>
-                    <label><input type="checkbox" name="crema" value="ketchup"> Kétchup</label>
-                    <label><input type="checkbox" name="crema" value="aji"> Ají de la casa</label>
-                </div>
-
-                <div class="grupo-opciones">
-                    <h4>Extras (Costo adicional)</h4>
-                    <label><input type="checkbox" name="extra" value="papas"> Porción de papas extra (+ S/ 4.00)</label>
-                    <label><input type="checkbox" name="extra" value="queso"> Doble queso (+ S/ 2.50)</label>
-                </div>
+                <h3></h3>
+                <div id="contenedor-modificadores"></div>
 
                 <button class="btn-agregar-ticket">Agregar al Ticket</button>
             </div>
